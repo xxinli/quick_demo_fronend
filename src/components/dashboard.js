@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles.css';
 
+// courtesy of https://www.smashingmagazine.com/2020/03/sortable-tables-react/
 const useSortableData = (items, config = null) => {
   const [sortConfig, setSortConfig] = React.useState(config);
 
@@ -36,6 +37,9 @@ const useSortableData = (items, config = null) => {
 };
 
 export const CompanyTable = (props) => {
+  if (!props.items) {
+      return ;
+  }
   const { items, requestSort, sortConfig } = useSortableData(props.items);
   const getClassNamesFor = (name) => {
     if (!sortConfig) {
@@ -45,7 +49,7 @@ export const CompanyTable = (props) => {
   };
   return (
     <table>
-      <caption>Products</caption>
+      <caption>Company</caption>
       <thead>
         <tr>
           <th>
@@ -60,6 +64,24 @@ export const CompanyTable = (props) => {
           <th>
             <button
               type="button"
+              onClick={() => requestSort('unique_symbol')}
+              className={getClassNamesFor('unique_symbol')}
+            >
+              Symbol
+            </button>
+          </th>
+          <th>
+            <button
+              type="button"
+              onClick={() => requestSort('exchange_symbol')}
+              className={getClassNamesFor('exchange_symbol')}
+            >
+              Exchange Symbol
+            </button>
+          </th>
+          <th>
+            <button
+              type="button"
               onClick={() => requestSort('price')}
               className={getClassNamesFor('price')}
             >
@@ -69,10 +91,10 @@ export const CompanyTable = (props) => {
           <th>
             <button
               type="button"
-              onClick={() => requestSort('stock')}
-              className={getClassNamesFor('stock')}
+              onClick={() => requestSort('total')}
+              className={getClassNamesFor('total')}
             >
-              In Stock
+              Score
             </button>
           </th>
         </tr>
@@ -81,8 +103,10 @@ export const CompanyTable = (props) => {
         {items.map((item) => (
           <tr key={item.id}>
             <td>{item.name}</td>
+            <td>{item.unique_symbol}</td>
+            <td>{item.exchange_symbol}</td>
             <td>${item.price}</td>
-            <td>{item.stock}</td>
+            <td>{item.total}</td>
           </tr>
         ))}
       </tbody>

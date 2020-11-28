@@ -6,18 +6,19 @@ import { CompanyTable } from './components/dashboard';
 
 class App extends Component {
   state = {
-    data: null
+    data: [],
+    init: false
   };
 
   componentDidMount() {
     // Call our fetch function below once the component mounts
   this.callBackendAPI()
-    .then(res => this.setState({ data: res.express }))
+    .then(res => this.setState({ data: res.items, init: true }))
     .catch(err => console.log(err));
 }
   // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
 callBackendAPI = async () => {
-  return fetch('/company', {
+  return fetch('/api/company', {
     method: 'get'
   }).then(res => res.json());
 };
@@ -30,17 +31,13 @@ render() {
         <p>
           Edit11 <code>src/App.js</code> and save to reload.
         </p>
-        <CompanyTable
-        items={[
-          { id: 1, name: 'Cheese', price: 4.9, stock: 20 },
-          { id: 2, name: 'Milk', price: 1.9, stock: 32 },
-          { id: 3, name: 'Yoghurt', price: 2.4, stock: 12 },
-          { id: 4, name: 'Heavy Cream', price: 3.9, stock: 9 },
-          { id: 5, name: 'Butter', price: 0.9, stock: 99 },
-          { id: 6, name: 'Sour Cream ', price: 2.9, stock: 86 },
-          { id: 7, name: 'Fancy French Cheese 🇫🇷', price: 99, stock: 12 },
-        ]}
-      />
+        {
+          this.state.init && 
+          <CompanyTable
+            items={this.state.data}
+         />
+        }
+        
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -50,7 +47,7 @@ render() {
           Learn React
         </a>
       </header>
-      <p className="App-intro">{this.state.data}</p>
+      {/* <p className="App-intro">{this.state.data}</p> */}
     </div>
   );
 }
