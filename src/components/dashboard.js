@@ -46,7 +46,6 @@ export const CompanyTable = (props) => {
   };
   return (
     <table>
-      <caption>Company</caption>
       <thead>
         <tr>
           <th>

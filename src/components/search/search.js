@@ -100,13 +100,8 @@ class Search extends Component {
 
 	render() {
 		const { query, loading, message } = this.state;
-
-
 		return (
 			<div className="container">
-			{/*	Heading*/}
-			<h2 className="heading">Live Search: React Application</h2>
-			{/* Search Input*/}
 			<label className="search-label" htmlFor="search-input">
 				<input
 					type="text"

@@ -7,7 +7,7 @@ export class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: ''
+            text: 'Backend is not connected'
         };
     }
   
