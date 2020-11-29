@@ -37,9 +37,6 @@ const useSortableData = (items, config = null) => {
 };
 
 export const CompanyTable = (props) => {
-  if (!props.items) {
-      return ;
-  }
   const { items, requestSort, sortConfig } = useSortableData(props.items);
   const getClassNamesFor = (name) => {
     if (!sortConfig) {
