@@ -16,23 +16,19 @@ class Search extends Component {
 			loading: false,
 			message: ''
 		};
-
-		this.cancel = '';
 	}
 
 	componentDidMount() {
-		// Call our fetch function below once the component mounts
 		request('company')
 		.then( res => {
 			console.log(res);
 			const total = res.items.length;
 			const resultNotFoundMsg = total < 1
-									? 'There are no more search results. Please try a new search'
+									? 'No search results.'
 									: '';
 			this.setState( {
 				results: res.items,
 				message: resultNotFoundMsg,
-				totalResults: total,
 				loading: false
 			} )
 		} )
@@ -42,26 +38,16 @@ class Search extends Component {
 	  }
 
 
-	/**
-	 * Fetch the search results and update the state with the result.
-	 * Also cancels the previous query before making the new one.
-	 *
-	 * @param {int} updatedPageNo Updated Page No.
-	 * @param {String} query Search Query.
-	 *
-	 */
 	fetchSearchResults = ( query ) => {
 	    request( `search?t=${query}`)
 			.then( res => {
-                console.log(res);
 				const total = res.items.length;
 				const resultNotFoundMsg = total < 1
-										? 'There are no more search results. Please try a new search'
+										? 'No search results.'
 										: '';
 				this.setState( {
 					results: res.items,
 					message: resultNotFoundMsg,
-					totalResults: total,
 					loading: false
 				} )
 			} )
@@ -86,13 +72,12 @@ class Search extends Component {
 	renderSearchResults = () => {
 		const { results } = this.state;
 
-		if ( Object.keys( results ).length && results.length ) {
+		if (results.length ) {
 			return (
 				<div className="results-container">
 					<CompanyTable
-            items={results}
-        />
-
+            			items={results}
+        			/>
 				</div>
 			)
 		}
